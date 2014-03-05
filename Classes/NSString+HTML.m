@@ -116,7 +116,10 @@
         
         // Decode HTML entities and return
         NSString *retString = [result stringByDecodingHTMLEntities];
-
+#if !__has_feature(objc_arc)
+		[result release];
+		[scanner release];
+#endif
         // Return
         return retString;
             
@@ -185,7 +188,11 @@
         
         // Cleanup & return
         NSString *retString = [NSString stringWithString:result];
-
+#if !__has_feature(objc_arc)
+		[result release];
+		[scanner release];
+#endif
+		
         // Return
         return retString;
         
@@ -228,7 +235,11 @@
         
         // Return
         NSString *retString = [NSString stringWithString:result];
-        
+#if !__has_feature(objc_arc)
+ 		[result release];
+ 		[scanner release];
+#endif
+		
         // Return
         return retString;
 	}
@@ -270,6 +281,9 @@
             if (tag) {
                 NSString *t = [[NSString alloc] initWithFormat:@"%@>", tag];
                 [tags addObject:t];
+#if !__has_feature(objc_arc)
+				[t release];
+#endif
             }
             
         } while (![scanner isAtEnd]);
@@ -304,7 +318,10 @@
         
         // Remove multi-spaces and line breaks
         finalString = [result stringByRemovingNewLinesAndWhitespace];
-        
+#if !__has_feature(objc_arc)
+  		[result release];
+  		[tags release];
+#endif
         // Cleanup
 
         // Return
